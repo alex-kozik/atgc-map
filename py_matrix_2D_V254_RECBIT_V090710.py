@@ -5,12 +5,15 @@
 #                      MAD MAPPING PROGRAM                      #
 #                    PART 3  ( VISUALIZATION )                  #
 #                                                               #
-#                     COPYRIGHT  2004  2005                     #
+#       COPYRIGHT  2004  2005  2006  2007  2008  2009           #
 #                        Alexander Kozik                        #
 #                                                               #
 #                    +----------------------+                   # 
 #                    | http://www.atgc.org/ |                   #
 #                    +----------------------+                   #
+#             +------------------------------------+            #
+#             | http://code.google.com/p/atgc-map/ |            #
+#             +------------------------------------+            #
 #                                                               #
 #             UCD Genome Center. R.Michelmore group             #
 #                                                               #
@@ -843,6 +846,7 @@ def Seqs_Matrix(in_name, list_id, out_name, column_n, diag_fill, dummy_fill, \
 		print "MAP UNIT:  " + `map_unit` + "  PIXELS"
 		### MARGIN FOR MAP
 		m_map = 200
+		# m_map = 260
 		print "MARGIN FOR MAP: " + str(m_map)
 	ab_margin = 0
 	if work_with_loc == "TRUE":
@@ -1339,28 +1343,46 @@ def Seqs_Matrix(in_name, list_id, out_name, column_n, diag_fill, dummy_fill, \
 		if k == xn - 1:
 			out_file1.write('\n')
 		#####################################++>
+		### FINE MAP LAYOUT ###
 		if map_status == "TRUE":
 			tick_shift = math.fmod(k+1,2)
 			if cell_size == "SMALL":
 				id_shift = 0
 				line_shift = 65
+				# line_shift = 125
 			if cell_size == "LARGE":
 				id_shift = 0
-				line_shift = 0
+				line_shift = 10
 			if tick_shift == 0 and cell_size == "SMALL":
-				id_shift = 65
-				line_shift = 0
+				# id_shift = 65
+				id_shift = 125
+				# line_shift = 0
+				line_shift = -60
 			if tick_shift == 0 and cell_size == "LARGE":
 				id_shift = 0
 				line_shift = 0
-			draw_png.line([(ml+xn*c+m_map-195),(ml+k*c+c/2),(ml+xn*c+m_map-170+id_shift),(ml+k*c+c/2)],fill=(0,0,64))
+
+			### LINES ON MAP ###
+			if tick_shift != 0:
+				# draw_png.line([(ml+xn*c+m_map-30-line_shift),(ml+k*c+c/2),(ml+xn*c+m_map-10),(ml+k*c+c/2)],fill=(220,120,160))
+				draw_png.line([(ml+xn*c+m_map+30-line_shift),(ml+k*c+c/2),(ml+xn*c+m_map+20),(ml+k*c+c/2)],fill=(120,120,164))
+				# draw_png.line([(ml+xn*c+m_map-10),(ml+k*c+c/2),(ml+xn*c+m_map+80),(ml+map_array[id]*map_unit)],fill=(120,220,160))
+				draw_png.line([(ml+xn*c+m_map+20),(ml+k*c+c/2),(ml+xn*c+m_map+85),(ml+map_array[id]*map_unit)],fill=(120,120,164))
+			draw_png.line([(ml+xn*c+m_map+85),(ml+map_array[id]*map_unit),(ml+xn*c+m_map+100),(ml+map_array[id]*map_unit)],fill=(120,120,160))
+			#################################
+
+			draw_png.line([(ml+xn*c+m_map-195),(ml+k*c+c/2),(ml+xn*c+m_map-170+id_shift),(ml+k*c+c/2)],fill=(120,120,160))
 			draw_png.text([(ml+xn*c+m_map-160+id_shift),(ml+k*c+c/2-5)],fill=(0,0,0),text=(id),font=font)
 			if print_frame == "TRUE":
 				try:
 					frame_id = frame_array[id]
 					draw_png.text([(ml+xn*c+m_map-160+id_shift),(ml+k*c+c/2-5)],fill=(0,0,225),text=(id),font=font)
+					# if cell_size == "SMALL":
+					#	draw_png.text([(ml+xn*c+m_map-160+id_shift/10),(ml+k*c+c/2-5)],fill=(0,0,225),text=(frame_id),font=font)
+					#	# draw_png.text([(ml+xn*c+m_map-185+id_shift/10),(ml+k*c+c/2-5)],fill=(0,0,225),text=(frame_id),font=font)
 					if cell_size == "LARGE":
-						draw_png.text([(ml+xn*c+m_map-45+id_shift),(ml+k*c+c/2-5)],fill=(0,0,225),text=(frame_id),font=font)
+						draw_png.text([(ml+xn*c+m_map-15+id_shift),(ml+k*c+c/2-5)],fill=(0,0,225),text=(frame_id),font=font)
+						# draw_png.text([(ml+xn*c+m_map-35+id_shift),(ml+k*c+c/2-5)],fill=(0,0,225),text=(frame_id),font=font)
 					print id + '\t' + " ++++ IT IS A FRAME MARKER ++++ "
 				except:
 					# continue
@@ -1369,39 +1391,76 @@ def Seqs_Matrix(in_name, list_id, out_name, column_n, diag_fill, dummy_fill, \
 				try:
 					high_id = high_array[id]
 					draw_png.text([(ml+xn*c+m_map-160+id_shift),(ml+k*c+c/2-5)],fill=(255,0,0),text=(id),font=font)
+					# if cell_size == "SMALL":
+					#	draw_png.text([(ml+xn*c+m_map-180+id_shift/10),(ml+k*c+c/2-5)],fill=(255,0,0),text=("*"),font=font)
 					if cell_size == "LARGE":
-						draw_png.text([(ml+xn*c+m_map-40+id_shift),(ml+k*c+c/2-5)],fill=(255,0,0),text=("*"),font=font)
-					print id + '\t' + "IT IS A NEW MARKER"
+						draw_png.text([(ml+xn*c+m_map-25+id_shift),(ml+k*c+c/2-5)],fill=(255,0,0),text=("*"),font=font)
+					print id + '\t' + "IT IS A RED MARKER"
 				except:
 					print id + '\t' + "IT IS NOT A NEW MARKER"
-			draw_png.line([(ml+xn*c+m_map-30-line_shift),(ml+k*c+c/2),(ml+xn*c+m_map-10),(ml+k*c+c/2)],fill=(0,0,64))
-			draw_png.line([(ml+xn*c+m_map-10),(ml+k*c+c/2),(ml+xn*c+m_map+80),(ml+map_array[id]*map_unit)],fill=(0,0,64))
-			draw_png.line([(ml+xn*c+m_map+80),(ml+map_array[id]*map_unit),(ml+xn*c+m_map+100),(ml+map_array[id]*map_unit)],fill=(0,0,64))
+			# draw_png.line([(ml+xn*c+m_map-30-line_shift),(ml+k*c+c/2),(ml+xn*c+m_map-10),(ml+k*c+c/2)],fill=(120,120,160))
+			# draw_png.line([(ml+xn*c+m_map-10),(ml+k*c+c/2),(ml+xn*c+m_map+80),(ml+map_array[id]*map_unit)],fill=(120,120,160))
+			# draw_png.line([(ml+xn*c+m_map+80),(ml+map_array[id]*map_unit),(ml+xn*c+m_map+100),(ml+map_array[id]*map_unit)],fill=(120,120,160))
 		##################################### RIL IMAGE ###############################################
 			if draw_ril_image == "TRUE":
-				draw_ril.line([(ml+xrn*c+m_map-195),(ml+k*c+c/2),(ml+xrn*c+m_map-170+id_shift),(ml+k*c+c/2)],fill=(0,0,64))
+				draw_ril.line([(ml+xrn*c+m_map-195),(ml+k*c+c/2),(ml+xrn*c+m_map-170+id_shift),(ml+k*c+c/2)],fill=(120,120,164))
+				if tick_shift != 0:
+					# draw_ril.text([(ml+xrn*c+m_map-160+id_shift),(ml+k*c+c/2-5)],fill=(0,0,0),text=(id),font=font)
+					# draw_ril.line([(ml+xrn*c+m_map-30-line_shift),(ml+k*c+c/2),(ml+xrn*c+m_map-10),(ml+k*c+c/2)],fill=(120,120,164))
+					# draw_ril.line([(ml+xrn*c+m_map-10),(ml+k*c+c/2),(ml+xrn*c+m_map+80),(ml+map_array[id]*map_unit)],fill=(120,120,164))
+					draw_ril.line([(ml+xrn*c+m_map+30-line_shift),(ml+k*c+c/2),(ml+xrn*c+m_map+20),(ml+k*c+c/2)],fill=(120,120,164))
+					draw_ril.line([(ml+xrn*c+m_map+20),(ml+k*c+c/2),(ml+xrn*c+m_map+85),(ml+map_array[id]*map_unit)],fill=(120,120,164))
+				draw_ril.line([(ml+xrn*c+m_map+85),(ml+map_array[id]*map_unit),(ml+xrn*c+m_map+100),(ml+map_array[id]*map_unit)],fill=(120,120,164))
 				draw_ril.text([(ml+xrn*c+m_map-160+id_shift),(ml+k*c+c/2-5)],fill=(0,0,0),text=(id),font=font)
-				draw_ril.line([(ml+xrn*c+m_map-30-line_shift),(ml+k*c+c/2),(ml+xrn*c+m_map-10),(ml+k*c+c/2)],fill=(0,0,64))
-				draw_ril.line([(ml+xrn*c+m_map-10),(ml+k*c+c/2),(ml+xrn*c+m_map+80),(ml+map_array[id]*map_unit)],fill=(0,0,64))
-				draw_ril.line([(ml+xrn*c+m_map+80),(ml+map_array[id]*map_unit),(ml+xrn*c+m_map+100),(ml+map_array[id]*map_unit)],fill=(0,0,64))
 				#### DOUBLE RECOMBINANATS ####
 				trouble = double_rec[id]
 				if trouble > 0 and trouble < 2:
 					draw_ril.text([(ml+xrn*c+m_map-160+id_shift),(ml+k*c+c/2-5)],fill=(0,60,180),text=(id),font=font)
+					# if cell_size == "SMALL":
+                                        #        draw_ril.text([(ml+xrn*c+m_map-185+id_shift/10),(ml+k*c+c/2-5)],fill=(0,60,180),text=(`trouble`),font=font)
 					if cell_size == "LARGE":
-						draw_ril.text([(ml+xrn*c+m_map-50+id_shift),(ml+k*c+c/2-5)],fill=(0,60,180),text=(`trouble`),font=font)
+						draw_ril.text([(ml+xrn*c+m_map-15+id_shift),(ml+k*c+c/2-5)],fill=(0,60,180),text=(`trouble`),font=font)
 				if trouble == 2:
 					draw_ril.text([(ml+xrn*c+m_map-160+id_shift),(ml+k*c+c/2-5)],fill=(0,60,180),text=(id),font=font)
+					# if cell_size == "SMALL":
+                                        #        draw_ril.text([(ml+xrn*c+m_map-185+id_shift/10),(ml+k*c+c/2-5)],fill=(125,0,0),text=(`trouble`),font=font)
 					if cell_size == "LARGE":
-						draw_ril.text([(ml+xrn*c+m_map-50+id_shift),(ml+k*c+c/2-5)],fill=(125,0,0),text=(`trouble`),font=font)
+						draw_ril.text([(ml+xrn*c+m_map-15+id_shift),(ml+k*c+c/2-5)],fill=(125,0,0),text=(`trouble`),font=font)
 				if trouble > 2:
 					draw_ril.text([(ml+xrn*c+m_map-160+id_shift),(ml+k*c+c/2-5)],fill=(0,60,180),text=(id),font=font)
+					# if cell_size == "SMALL":
+					#	draw_ril.text([(ml+xrn*c+m_map-185+id_shift/10),(ml+k*c+c/2-5)],fill=(200,0,0),text=(`trouble`),font=font)
 					if cell_size == "LARGE":
-						draw_ril.text([(ml+xrn*c+m_map-50+id_shift),(ml+k*c+c/2-5)],fill=(200,0,0),text=(`trouble`),font=font)
+						draw_ril.text([(ml+xrn*c+m_map-15+id_shift),(ml+k*c+c/2-5)],fill=(200,0,0),text=(`trouble`),font=font)
 				##############################
 		###############################################################################################
 		#####################################++<
 		k = k + 1
+
+	## WRITE IDs ON MAP AGAIN ##
+	kkk = 0
+	for id in sorted_list:
+
+		if map_status == "TRUE" and cell_size == "SMALL":
+                        tick_shift = math.fmod(kkk+1,2)
+                        id_shift = 0
+                        line_shift = 65
+                        # line_shift = 125
+                        if tick_shift == 0:
+                                # id_shift = 65
+                                id_shift = 125
+                                # line_shift = 0
+                                line_shift = -60
+
+			draw_png.text([(ml+xn*c+m_map-160+id_shift),(ml+kkk*c+c/2-5)],fill=(0,0,0),text=(id),font=font)
+
+			if draw_ril_image == "TRUE":
+
+				draw_ril.text([(ml+xrn*c+m_map-160+id_shift),(ml+kkk*c+c/2-5)],fill=(0,0,0),text=(id),font=font)
+
+		kkk = kkk + 1
+	## END OF DUMMY IDs ##
+
 	# y position on image
 	yn = 0
 	for id in sorted_list:
@@ -1715,17 +1774,17 @@ def Seqs_Matrix(in_name, list_id, out_name, column_n, diag_fill, dummy_fill, \
 	##########################################
 
 	draw_png.text([ml,(ml+yn*c+35+ab_margin)],fill=(0,0,0),text=("MAP: " + list_id),font=font)
-	draw_png.text([ml+250,(ml+yn*c+35+ab_margin)],fill=(0,0,0),text=("MATRIX: " + in_name),font=font)
+	draw_png.text([ml+350,(ml+yn*c+35+ab_margin)],fill=(0,0,0),text=("MATRIX: " + in_name),font=font)
 	link_limit = round(link_limit,2)
 	link_limit = str(link_limit)
-	draw_png.text([ml+525,(ml+yn*c+35+ab_margin)],fill=(0,0,0),text=("CUTOFF: " + link_limit),font=font)
+	draw_png.text([ml+750,(ml+yn*c+35+ab_margin)],fill=(0,0,0),text=("CUTOFF: " + link_limit),font=font)
 
 	### DOUBLE RECOMBINATION FOR MARKERS ###
 	if draw_ril_image == "TRUE":
 		draw_ril.text([(ml+k*c+30),(ml+yn*c+ab_margin/2-60)],fill=(0,0,0),text=\
 				("number of double cross overs"),font=font)
 		draw_ril.text([ml,(ml+yn*c+40+ab_margin)],fill=(0,0,0),text=("MAP: " + list_id),font=font)
-		draw_ril.text([ml+250,(ml+yn*c+40+ab_margin)],fill=(0,0,0),text=("LOCUS FILE: " + loc_file),font=font)
+		draw_ril.text([ml+350,(ml+yn*c+40+ab_margin)],fill=(0,0,0),text=("LOCUS FILE: " + loc_file),font=font)
 
 	### DOUBLE RECOMBINATION FOR RILs ###
 		z = 1
@@ -1742,15 +1801,15 @@ def Seqs_Matrix(in_name, list_id, out_name, column_n, diag_fill, dummy_fill, \
 			except:
 				value = 0
 			if value == 0:
-				draw_ril.text([(ml+(z-1)*c+3),(ml+yn*c+4+level)],fill=(0,0,125),text=(`value`),font=font)
+				draw_ril.text([(ml+(z-1)*c),(ml+yn*c+4+level)],fill=(0,0,125),text=(`value`),font=font)
 			if value == 1:
-				draw_ril.text([(ml+(z-1)*c+3),(ml+yn*c+4+level)],fill=(0,60,180),text=(`value`),font=font)
+				draw_ril.text([(ml+(z-1)*c),(ml+yn*c+4+level)],fill=(0,60,180),text=(`value`),font=font)
 			if value == 2:
-				draw_ril.text([(ml+(z-1)*c+3),(ml+yn*c+4+level)],fill=(125,0,0),text=(`value`),font=font)
+				draw_ril.text([(ml+(z-1)*c),(ml+yn*c+4+level)],fill=(125,0,0),text=(`value`),font=font)
 			if value > 2 and value < 10:
-				draw_ril.text([(ml+(z-1)*c+3),(ml+yn*c+4+level)],fill=(200,0,0),text=(`value`),font=font)
+				draw_ril.text([(ml+(z-1)*c),(ml+yn*c+4+level)],fill=(200,0,0),text=(`value`),font=font)
 			if value >= 10:
-				draw_ril.text([(ml+(z-1)*c+3),(ml+yn*c+4+level)],fill=(225,0,0),text=("X"),font=font)
+				draw_ril.text([(ml+(z-1)*c),(ml+yn*c+4+level)],fill=(225,0,0),text=("X"),font=font)
 			z = z + 1
 
 	in_file.close()
@@ -1759,6 +1818,16 @@ def Seqs_Matrix(in_name, list_id, out_name, column_n, diag_fill, dummy_fill, \
 	print ""
 	print "PROCESSING LARGE SIZE"
 	my_lovely_image.save(out_file2)
+
+        ###########################################
+        if draw_ril_image == "TRUE":
+                print "PROCESSING RIL IMAGE"
+                my_ril_image.save(out_ril_large_name, my_ril_image.format)
+                mini_ril = Image.open(out_ril_large_name)
+                mini_ril = mini_ril.resize((200,175),Image.ANTIALIAS)
+                mini_ril = mini_ril.filter(ImageFilter.SHARPEN)
+                mini_ril.save(out_ril_small_name, mini_ril.format)
+        ###########################################
 
 	#########   SCALING THE IMAGE   ###########
 	im = Image.open(out_file2)
@@ -1778,36 +1847,48 @@ def Seqs_Matrix(in_name, list_id, out_name, column_n, diag_fill, dummy_fill, \
 		out_2000_name = out_name + '.2000.png'
 		out_small_name = out_name + '.xsmall.png'
 	##################################################
-	if width > 1000 and height > 750:
+	huge_image = "FALSE"
+	if width > 1500 and height > 1200:
 		print "PROCESSING MEDIUM SIZE"
-		im_m = im.resize((1000,750),Image.ANTIALIAS)
+		im_m = im.resize((1500,1200),Image.ANTIALIAS)
 		im_m = im_m.filter(ImageFilter.SHARPEN)
 		im_m.save(out_medium_name, im_m.format)
-	if width > 2000 and height > 1500:
-		print "PROCESSING 2000 PIXELS SIZE"
-		im_2 = im.resize((2000,1500),Image.ANTIALIAS)
-		im_2 = im_2.filter(ImageFilter.SHARPEN)
-		im_2.save(out_2000_name, im_2.format)
-	if width >= 10000:
-		print "PROCESSING 5000 PIXELS SIZE"
-		im_5 = im.resize((5500,5000),Image.ANTIALIAS)
-		im_5 = im_5.filter(ImageFilter.SHARPEN)
-		im_5.save(out_5000_name, im_5.format)
+		huge_image = "TRUE"
+	######################################################
+	# if width > 2000 and height > 1500:
+	#	print "PROCESSING 2000 PIXELS SIZE"
+	#	im_2 = im.resize((2000,1500),Image.ANTIALIAS)
+	#	im_2 = im_2.filter(ImageFilter.SHARPEN)
+	#	im_2.save(out_2000_name, im_2.format)
+	######################################################
+	# if width >= 10000:
+	#	print "PROCESSING 5000 PIXELS SIZE"
+	#	im_5 = im.resize((5500,5000),Image.ANTIALIAS)
+	#	im_5 = im_5.filter(ImageFilter.SHARPEN)
+	#	im_5.save(out_5000_name, im_5.format)
+	######################################################
 	print "PROCESSING SMALL SIZE"
 	if cgpdb_style == "FALSE":
-		im_s = im.resize((200,175),Image.ANTIALIAS)
+		if huge_image == "TRUE":
+			im_s = im_m.resize((200,175),Image.ANTIALIAS)
+		if huge_image == "FALSE":
+			im_s = im.resize((200,175),Image.ANTIALIAS)
 	if cgpdb_style == "TRUE":
-		im_s = im.resize((125,100),Image.ANTIALIAS)
+		if huge_image == "TRUE":
+			im_s = im_m.resize((125,100),Image.ANTIALIAS)
+		if huge_image == "FALSE":
+			im_s = im.resize((125,100),Image.ANTIALIAS)
+	print " HUGE IMAGE - " + huge_image
 	im_s = im_s.filter(ImageFilter.SHARPEN)
 	im_s.save(out_small_name, im_s.format)
 	###########################################
-	if draw_ril_image == "TRUE":
-		print "PROCESSING RIL IMAGE"
-		my_ril_image.save(out_ril_large_name, my_ril_image.format)
-		mini_ril = Image.open(out_ril_large_name)
-		mini_ril = mini_ril.resize((200,175),Image.ANTIALIAS)
-		mini_ril = mini_ril.filter(ImageFilter.SHARPEN)
-		mini_ril.save(out_ril_small_name, mini_ril.format)
+	# if draw_ril_image == "TRUE":
+	#	print "PROCESSING RIL IMAGE"
+	#	my_ril_image.save(out_ril_large_name, my_ril_image.format)
+	#	mini_ril = Image.open(out_ril_large_name)
+	#	mini_ril = mini_ril.resize((200,175),Image.ANTIALIAS)
+	#	mini_ril = mini_ril.filter(ImageFilter.SHARPEN)
+	#	mini_ril.save(out_ril_small_name, mini_ril.format)
 	###########################################
 	print "===================================="
 	print "             DONE!                  "

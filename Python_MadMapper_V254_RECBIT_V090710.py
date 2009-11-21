@@ -3496,7 +3496,7 @@ if __name__ == "__main__":
 		abs_loss = missingd
 		double_limit = double_x
 
-		sys.setrecursionlimit(10000)
+		sys.setrecursionlimit(100000)
 
 		Define_Bit_Scores()
 
