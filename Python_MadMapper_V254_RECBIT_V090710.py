@@ -3291,8 +3291,9 @@ deep_clustering = "TRUE"
 map_construction = "TRUE"
 # map_construction = "FALSE"
 
-# print_all_pairs = "TRUE"
-print_all_pairs = "FALSE"
+### CHANGE TO FALSE TO SUPPRESS PRINTING OF LARGE all_pairs FILE
+print_all_pairs = "TRUE"
+# print_all_pairs = "FALSE"
 
 double_limit = 3
 
@@ -3496,6 +3497,7 @@ if __name__ == "__main__":
 		abs_loss = missingd
 		double_limit = double_x
 
+		### RECURSION LIMIT ###
 		sys.setrecursionlimit(100000)
 
 		Define_Bit_Scores()

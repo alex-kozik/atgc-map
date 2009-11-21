@@ -1352,7 +1352,7 @@ def Seqs_Matrix(in_name, list_id, out_name, column_n, diag_fill, dummy_fill, \
 				# line_shift = 125
 			if cell_size == "LARGE":
 				id_shift = 0
-				line_shift = 10
+				line_shift = 15
 			if tick_shift == 0 and cell_size == "SMALL":
 				# id_shift = 65
 				id_shift = 125
