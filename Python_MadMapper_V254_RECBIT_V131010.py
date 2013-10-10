@@ -1394,7 +1394,7 @@ def Read_Data_File(in_name, out_name, rec_cut, bit_cut, dat_cut, frame_file_name
 	print "============================================="
 	out_file6.write("=============================================" + '\n')
 
-	if n >= 5001:
+	if n >= 8001:
 		print_all_pairs = "FALSE"
 		print "TOO MANY MARKERS"
 		print "ALL PAIRS FILE WILL NOT BE GENERATED"
@@ -2532,6 +2532,8 @@ def Read_Data_File(in_name, out_name, rec_cut, bit_cut, dat_cut, frame_file_name
 	# if map_construction == "TRUE":
 	out_file3a.close()
 	out_file3b.close()
+	out_file3w_1.close()
+	out_file3w_2.close()
 	if deep_clustering  == "TRUE":
 		out_file3k.close()
 		out_file3la.close()
